@@ -10,8 +10,12 @@ import "../styles/auth.scss";
 
 //Components
 import { Button } from "../components/Button";
+import { useContext } from "react";
+import { AuthContext } from "../App";
 
 export function NewRoom() {
+  const { user } = useContext(AuthContext);
+
   return (
     <div id="page-auth">
       <aside>
@@ -22,6 +26,8 @@ export function NewRoom() {
         <strong>Crie salas de Q&amp;A ao-vivo</strong>
         <p>Tire dúvidas da sua audiência em tempo real</p>
       </aside>
+
+      <h1>{user?.name}</h1>
 
       <main>
         <div className="main-content">
