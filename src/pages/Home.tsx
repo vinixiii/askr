@@ -1,9 +1,8 @@
 //Packages
-import { useContext } from "react";
 import { useHistory } from "react-router";
 
-//Context
-import { AuthContext } from "../App";
+//Hooks
+import { useAuth } from "../hooks/useAuth";
 
 //Images
 import illustrationImg from "../assets/images/illustration.svg";
@@ -19,7 +18,7 @@ import { Button } from "../components/Button";
 export function Home() {
   const history = useHistory();
 
-  const { user, signInWithGoogle } = useContext(AuthContext);
+  const { user, signInWithGoogle } = useAuth();
 
   //Direciona para a página de criação de salas
   async function handleCreateRoom() {

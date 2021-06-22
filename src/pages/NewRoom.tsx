@@ -1,6 +1,9 @@
 //Packages
 import { Link } from "react-router-dom";
 
+//Hooks
+// import { useAuth } from "../hooks/useAuth";
+
 //Images
 import illustrationImg from "../assets/images/illustration.svg";
 import logoImg from "../assets/images/logo.svg";
@@ -10,11 +13,9 @@ import "../styles/auth.scss";
 
 //Components
 import { Button } from "../components/Button";
-import { useContext } from "react";
-import { AuthContext } from "../App";
 
 export function NewRoom() {
-  const { user } = useContext(AuthContext);
+  // const { user } = useAuth();
 
   return (
     <div id="page-auth">
@@ -26,8 +27,6 @@ export function NewRoom() {
         <strong>Crie salas de Q&amp;A ao-vivo</strong>
         <p>Tire dúvidas da sua audiência em tempo real</p>
       </aside>
-
-      <h1>{user?.name}</h1>
 
       <main>
         <div className="main-content">
