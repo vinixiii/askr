@@ -8,6 +8,7 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import { Home } from "./pages/Home";
 import { NewRoom } from "./pages/NewRoom";
 import { Room } from "./pages/Room";
+import { AdminRoom } from "./pages/AdminRoom";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/rooms/new" component={NewRoom} />
           {/* Define que a rota /rooms/'qualquercoisa' chama a página Room */}
           <Route path="/rooms/:id" component={Room} />
+          <Route path="/admin/rooms/:id" component={AdminRoom} />
         </Switch>
       </AuthContextProvider>
     </BrowserRouter>
