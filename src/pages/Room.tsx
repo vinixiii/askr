@@ -1,5 +1,5 @@
 //Packages
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useParams } from "react-router";
 import { database } from "../services/firebase";
 
@@ -15,77 +15,25 @@ import "../styles/room.scss";
 //Components
 import { Button } from "../components/Button";
 import { RoomCode } from "../components/RoomCode";
+import { Question } from "../components/Question";
+import { useRoom } from "../hooks/useRoom";
 
 //Types
 type RoomParams = {
   id: string;
 };
 
-type FirebaseQuestions = Record<
-  string,
-  {
-    author: {
-      name: string;
-      avatar: string;
-    };
-    content: string;
-    isAnswered: boolean;
-    isHighlighted: boolean;
-  }
->;
-
-type Questions = {
-  id: string;
-  author: {
-    name: string;
-    avatar: string;
-  };
-  content: string;
-  isAnswered: boolean;
-  isHighlighted: boolean;
-};
-
 export function Room() {
+  //Informações do usuário logado
+  const { user } = useAuth();
   //Armazena os parâmetros da URL na const params
   const params = useParams<RoomParams>();
   //Armazena o params.id na const roomId
   const roomId = params.id;
-  //Informações do usuário logado
-  const { user } = useAuth();
-
+  //Traz as informações das perguntas (título, autor, avatar...)
+  const { questions, title } = useRoom(roomId);
+  //Armazena as informações de uma nova pergunta
   const [newQuestion, setNewQuestion] = useState("");
-  const [questions, setQuestions] = useState<Questions[]>([]);
-  const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`);
-
-    //Adiciona um event listener para o evento value
-    //que traz todos os valores da referência
-    roomRef.on("value", (room) => {
-      const databaseRoom = room.val();
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-      //Transforma o objeto das questions em um array com dois índices
-      //[0] -> id da question
-      //[1] -> Objeto com as informações da question
-      const parsedQuestion = Object.entries(firebaseQuestions).map(
-        //Pega o índice[0] e o índice[1] do array e cria um objeto
-        //com as informações dos índices
-        ([key, value]) => {
-          return {
-            id: key,
-            content: value.content,
-            author: value.author,
-            isHighlighted: value.isHighlighted,
-            isAnswered: value.isAnswered,
-          };
-        }
-      );
-
-      setTitle(databaseRoom.title);
-      setQuestions(parsedQuestion);
-    });
-  }, [roomId]);
 
   //Cria uma nova pergunta e armazena no banco de dados
   async function handleSendQuestion(event: FormEvent) {
@@ -161,7 +109,18 @@ export function Room() {
             </Button>
           </div>
         </form>
-        {JSON.stringify(questions)}
+
+        <div className="question-list">
+          {questions.map((question) => {
+            return (
+              <Question
+                key={question.id}
+                content={question.content}
+                author={question.author}
+              />
+            );
+          })}
+        </div>
       </main>
     </div>
   );
