@@ -1,6 +1,10 @@
 //Packages
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { database } from "../services/firebase";
+
+//Hooks
+import { useAuth } from "../hooks/useAuth";
 
 //Images
 import logoImg from "../assets/images/logo.svg";
@@ -11,12 +15,34 @@ import "../styles/room.scss";
 //Components
 import { Button } from "../components/Button";
 import { RoomCode } from "../components/RoomCode";
-import { useAuth } from "../hooks/useAuth";
-import { database } from "../services/firebase";
 
 //Types
 type RoomParams = {
   id: string;
+};
+
+type FirebaseQuestions = Record<
+  string,
+  {
+    author: {
+      name: string;
+      avatar: string;
+    };
+    content: string;
+    isAnswered: boolean;
+    isHighlighted: boolean;
+  }
+>;
+
+type Questions = {
+  id: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  content: string;
+  isAnswered: boolean;
+  isHighlighted: boolean;
 };
 
 export function Room() {
@@ -24,17 +50,53 @@ export function Room() {
   const params = useParams<RoomParams>();
   //Armazena o params.id na const roomId
   const roomId = params.id;
-
+  //Informações do usuário logado
   const { user } = useAuth();
-  const [newQuestion, setNewQuestion] = useState("");
 
+  const [newQuestion, setNewQuestion] = useState("");
+  const [questions, setQuestions] = useState<Questions[]>([]);
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    const roomRef = database.ref(`rooms/${roomId}`);
+
+    //Adiciona um event listener para o evento value
+    //que traz todos os valores da referência
+    roomRef.on("value", (room) => {
+      const databaseRoom = room.val();
+      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+      //Transforma o objeto das questions em um array com dois índices
+      //[0] -> id da question
+      //[1] -> Objeto com as informações da question
+      const parsedQuestion = Object.entries(firebaseQuestions).map(
+        //Pega o índice[0] e o índice[1] do array e cria um objeto
+        //com as informações dos índices
+        ([key, value]) => {
+          return {
+            id: key,
+            content: value.content,
+            author: value.author,
+            isHighlighted: value.isHighlighted,
+            isAnswered: value.isAnswered,
+          };
+        }
+      );
+
+      setTitle(databaseRoom.title);
+      setQuestions(parsedQuestion);
+    });
+  }, [roomId]);
+
+  //Cria uma nova pergunta e armazena no banco de dados
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
 
+    //Se o valor do input for vazio para a função por aqui
     if (newQuestion.trim() === "") {
       return;
     }
 
+    //Se o usuário não estiver logado, exibe um erro
     if (!user) {
       throw new Error("Você precisa estar logado!");
     }
@@ -46,7 +108,7 @@ export function Room() {
         name: user.name,
         avatar: user.avatar,
       },
-      isHighLighted: false,
+      isHighlighted: false,
       isAnswered: false,
     };
 
@@ -55,6 +117,7 @@ export function Room() {
     //da referência será criado um novo objeto question com essas informações
     await database.ref(`rooms/${roomId}/questions`).push(question);
 
+    //Reseta o valor do state newQuestion
     setNewQuestion("");
   }
 
@@ -69,8 +132,10 @@ export function Room() {
 
       <main>
         <div className="room-title">
-          <h1>Sala React</h1>
-          <span>4 perguntas</span>
+          <h1>Sala {title}</h1>
+          <span>
+            {questions.length} {questions.length > 1 ? "perguntas" : "pergunta"}
+          </span>
         </div>
 
         <form onSubmit={(event) => handleSendQuestion(event)}>
@@ -96,6 +161,7 @@ export function Room() {
             </Button>
           </div>
         </form>
+        {JSON.stringify(questions)}
       </main>
     </div>
   );

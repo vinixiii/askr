@@ -43,7 +43,7 @@ export function NewRoom() {
       authorId: user?.id,
     });
 
-    //Redireciona o usuário para a sala criada passando o id da sala como complemento da rota
+    //Redireciona o usuário para a sala criada passando o id da sala criada como complemento da rota
     history.push(`/rooms/${firebaseRoom.key}`);
   }
 
