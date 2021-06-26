@@ -63,8 +63,30 @@ export function useRoom(roomId: string) {
         }
       );
 
+      const sortedQuestions = parsedQuestion
+        .sort((a, b) => b.likeCount - a.likeCount)
+        .sort((a, b) => {
+          if (a.isHighlighted > b.isHighlighted) {
+            return -1;
+          }
+          if (a.isHighlighted < b.isHighlighted) {
+            return 1;
+          }
+          return 0;
+        })
+        .sort((a, b) => {
+          if (a.isAnswered < b.isAnswered) {
+            return -1;
+          }
+          if (a.isAnswered > b.isAnswered) {
+            return 1;
+          }
+          return 0;
+        })
+      
+
       setTitle(databaseRoom.title);
-      setQuestions(parsedQuestion);
+      setQuestions(sortedQuestions);
     });
 
     //Se desinscereve do listener aplicado no roomRef

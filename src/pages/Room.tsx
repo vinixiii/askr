@@ -1,13 +1,15 @@
 //Packages
 import { FormEvent, useState } from "react";
-import { useParams } from "react-router";
 import { database } from "../services/firebase";
+import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 
 //Hooks
 import { useAuth } from "../hooks/useAuth";
+import { useRoom } from "../hooks/useRoom";
 
 //Images
-import logoImg from "../assets/images/logo.svg";
+import logoImg from "../assets/images/logo-askr.svg";
 
 //Styles
 import "../styles/room.scss";
@@ -16,7 +18,6 @@ import "../styles/room.scss";
 import { Button } from "../components/Button";
 import { RoomCode } from "../components/RoomCode";
 import { Question } from "../components/Question";
-import { useRoom } from "../hooks/useRoom";
 
 //Types
 type RoomParams = {
@@ -25,7 +26,9 @@ type RoomParams = {
 
 export function Room() {
   //Informações do usuário logado
-  const { user } = useAuth();
+  const { user, signInWithGoogle, signOut } = useAuth();
+  //Navegação entre páginas
+  const history = useHistory();
   //Armazena os parâmetros da URL na const params
   const params = useParams<RoomParams>();
   //Armazena o params.id na const roomId
@@ -34,6 +37,18 @@ export function Room() {
   const { questions, title } = useRoom(roomId);
   //Armazena as informações de uma nova pergunta
   const [newQuestion, setNewQuestion] = useState("");
+
+  //Direciona para a página de criação de salas
+  async function handleSignIn() {
+    //Se o usuário não estiver autenticado
+    if (!user) {
+      //Faz o login com o Google
+      await signInWithGoogle();
+    }
+
+    //Se estiver autenticado, redireciona para a página de criação de salas
+    history.push(`/rooms/${roomId}`);
+  }
 
   //Cria uma nova pergunta e armazena no banco de dados
   async function handleSendQuestion(event: FormEvent) {
@@ -74,20 +89,31 @@ export function Room() {
     questionId: string,
     likeId: string | undefined
   ) {
-    if (likeId) {
-      //Remove o like
-      //Acessa a referência rooms/questions e remove os likes
-      await database
-        .ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
-        .remove();
-    } else {
-      //Da like
+    if (user) {
+      if (likeId) {
+        //Remove o like
+        //Acessa a referência rooms/questions e remove os likes
+        await database
+          .ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
+          .remove();
+      } else {
+        //Da like
 
-      //Acessa a referência rooms/questions e cria uma lista de likes
-      //passando o autor do like
-      await database.ref(`rooms/${roomId}/questions/${questionId}/likes`).push({
-        authorId: user?.id,
-      });
+        //Acessa a referência rooms/questions e cria uma lista de likes
+        //passando o autor do like
+        await database
+          .ref(`rooms/${roomId}/questions/${questionId}/likes`)
+          .push({
+            authorId: user?.id,
+          });
+      }
+    }
+  }
+
+  async function handleSignOut() {
+    if (user) {
+      await signOut();
+      history.push("/");
     }
   }
 
@@ -96,7 +122,12 @@ export function Room() {
       <header>
         <div className="content">
           <img src={logoImg} alt="Letmeask" />
-          <RoomCode code={roomId} />
+          <div>
+            <RoomCode code={roomId} />
+            <Button isSignOut onClick={handleSignOut}>
+              Sair
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -123,7 +154,8 @@ export function Room() {
               </div>
             ) : (
               <span>
-                Para enviar uma pergunta, <button>faça seu login</button>.
+                Para enviar uma pergunta,{" "}
+                <button onClick={handleSignIn}>faça seu login</button>.
               </span>
             )}
             <Button type="submit" disabled={!user}>

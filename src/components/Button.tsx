@@ -8,13 +8,23 @@ import "../styles/button.scss";
 //passando entre <> a tipagem do botão, que no caso é um HTMLButtonElement
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isOutlined?: boolean;
+  isSignOut?: boolean;
 };
 
 //Recebe como props isOutlined e o resto das props,
 //ou seja,todas as outras props que não a isOutlined
-export function Button({ isOutlined = false, ...props }: ButtonProps) {
+export function Button({
+  isOutlined = false,
+  isSignOut = false,
+  ...props
+}: ButtonProps) {
   //Através do spread operator (...) são passadas todas as props para o botão
   return (
-    <button className={`button ${isOutlined ? "outlined" : ""}`} {...props} />
+    <button
+      className={`button ${isOutlined ? "outlined" : ""} ${
+        isSignOut ? "signOut" : ""
+      }`}
+      {...props}
+    />
   );
 }

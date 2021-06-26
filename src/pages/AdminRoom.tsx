@@ -6,10 +6,10 @@ import { useParams } from "react-router";
 import { database } from "../services/firebase";
 
 //Hooks
-// import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 //Images
-import logoImg from "../assets/images/logo.svg";
+import logoImg from "../assets/images/logo-askr.svg";
 import deleteImg from "../assets/images/delete.svg";
 import checkImg from "../assets/images/check.svg";
 import answerImg from "../assets/images/answer.svg";
@@ -31,7 +31,7 @@ type RoomParams = {
 
 export function AdminRoom() {
   //Informações do usuário logado
-  // const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const history = useHistory();
   //Armazena os parâmetros da URL na const params
   const params = useParams<RoomParams>();
@@ -66,6 +66,13 @@ export function AdminRoom() {
     });
   }
 
+  async function handleSignOut() {
+    if (user) {
+      await signOut();
+      history.push("/");
+    }
+  }
+
   return (
     <div id="page-room">
       <header>
@@ -75,6 +82,9 @@ export function AdminRoom() {
             <RoomCode code={roomId} />
             <Button isOutlined onClick={handleEndRoom}>
               Encerrar sala
+            </Button>
+            <Button isSignOut onClick={handleSignOut}>
+              Sair
             </Button>
           </div>
         </div>
@@ -95,6 +105,8 @@ export function AdminRoom() {
                 key={question.id}
                 content={question.content}
                 author={question.author}
+                likesCount={question.likeCount}
+                isAdmin
                 isAnswered={question.isAnswered}
                 isHighlighted={question.isHighlighted}
               >
@@ -108,12 +120,14 @@ export function AdminRoom() {
                         src={checkImg}
                         alt="Marcar pergunta como respondida"
                       />
+                      {/* <p>Concluir</p> */}
                     </button>
                     <button
                       type="button"
                       onClick={() => handleHighlightQuestion(question.id)}
                     >
                       <img src={answerImg} alt="Dar destaque à pergunta" />
+                      {/* <p>Destacar</p> */}
                     </button>
                   </>
                 )}
@@ -122,6 +136,7 @@ export function AdminRoom() {
                   onClick={() => handleDeleteQuestion(question.id)}
                 >
                   <img src={deleteImg} alt="Remover pergunta" />
+                  {/* <p>Excluir</p> */}
                 </button>
               </Question>
             );

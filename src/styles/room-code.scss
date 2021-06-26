@@ -3,16 +3,19 @@
   border-radius: 8px;
   overflow: hidden;
   background: #fff;
-  border: 1px solid #835afd;
+  border: 1px solid #61e294;
+  color: #2a3d45;
   cursor: pointer;
   display: flex;
+  transition: filter 0.2;
 
   div {
-    background: #835afd;
+    background: #61e294;
     padding: 0 12px;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
   }
 
   span {
@@ -20,8 +23,11 @@
     align-self: center;
     flex: 1;
     padding: 0 16px 0 12px;
-    width: 230px;
     font-size: 14px;
     font-weight: 500;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
   }
 }

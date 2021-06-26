@@ -7,7 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 
 //Images
 import illustrationImg from "../assets/images/illustration.svg";
-import logoImg from "../assets/images/logo.svg";
+import logoImg from "../assets/images/logo-askr.svg";
 import googleIconImg from "../assets/images/google-icon.svg";
 
 //Styles
@@ -66,8 +66,11 @@ export function Home() {
           src={illustrationImg}
           alt="Ilustração simbolizando perguntas e respostas"
         />
-        <strong>Crie salas de Q&amp;A ao-vivo</strong>
-        <p>Tire dúvidas da sua audiência em tempo real</p>
+        <strong>Crie salas de perguntas e respostas ao-vivo.</strong>
+        <p>
+          Interaja com a sua audiência, ou una-se a uma sala já existente para
+          fazer suas perguntas!
+        </p>
       </aside>
 
       <main>

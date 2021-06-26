@@ -16,6 +16,7 @@ type AuthContextType = {
   user: User | undefined;
   //Toda função async devolve uma Promise, que nesse caso tem o retorno vazio
   signInWithGoogle: () => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
 //Define a tipagem para as props do AuthContextProvider
@@ -91,8 +92,13 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
     }
   }
 
+  async function signOut() {
+    await auth.signOut();
+    setUser(undefined);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
       {props.children}
     </AuthContext.Provider>
   );
