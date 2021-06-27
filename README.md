@@ -75,6 +75,8 @@ Com os software citados acima instalados, basta seguir os seguintes passos para 
 
 2. **Instalar as depêndencias** <br>
    Dentro do diretório do projeto, abra o terminal e cole o código: _`npm install`_ ou _`yarn`_
+   
+*Ou acesse o **askr** no seu navegador! [Clique aqui](https://letmeask-c06dc.web.app/)*
 
 ## Tecnologias 🛠
 
