@@ -1,0 +1,98 @@
+.question {
+  background: #fefefe;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+
+  //Adiciona estilo no .question a partir
+  //do próximo que aparecer na tela
+  & + .question {
+    margin-top: 8px;
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    svg path {
+      stroke: #61e294;
+    }
+
+    div {
+      font-size: 16px;
+      color: #61e294;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+    }
+  }
+
+  &.highlighted {
+    background: #f5fff9;
+    border: 1px solid #61e294;
+
+    footer .user-info span {
+      color: #2a3d45;
+    }
+  }
+
+  &.answered {
+    background: #eaebec;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 48px;
+
+    .user-info {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+
+      span {
+        margin-left: 8px;
+        color: #8b939c;
+        font-size: 14px;
+      }
+    }
+
+    > div {
+      display: flex;
+      gap: 16px;
+    }
+
+    button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      transition: filter 0.2;
+
+      &.like-button {
+        display: flex;
+        align-items: flex-end;
+        color: #8b939c;
+        gap: 8px;
+
+        &.liked {
+          color: #61e294;
+
+          svg path {
+            stroke: #61e294;
+          }
+        }
+      }
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+}

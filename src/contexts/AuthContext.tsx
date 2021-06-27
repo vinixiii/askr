@@ -16,6 +16,7 @@ type AuthContextType = {
   user: User | undefined;
   //Toda função async devolve uma Promise, que nesse caso tem o retorno vazio
   signInWithGoogle: () => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
 //Define a tipagem para as props do AuthContextProvider
@@ -33,9 +34,9 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    //Define um listener para o evento de autenticação do usuário,
+    //Define um listener para o estado de autenticação do usuário,
     //ou seja, se o usuário já fez um login anteriormente essa função irá retornar
-    //os dados desse usuário
+    //os dados desse usuário mesmo ao recarregar a página
     auth.onAuthStateChanged((user) => {
       //Se houver informações no user
       if (user) {
@@ -91,8 +92,13 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
     }
   }
 
+  async function signOut() {
+    await auth.signOut();
+    setUser(undefined);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
       {props.children}
     </AuthContext.Provider>
   );

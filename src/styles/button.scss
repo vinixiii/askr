@@ -1,10 +1,9 @@
-button {
-  margin-top: 64px;
+.button {
   height: 50px;
   border-radius: 8px;
   font-weight: 500;
-  background: #835afd;
-  color: #fff;
+  background: #61e294;
+  color: #2a3d45;
   padding: 0 32px;
   display: flex;
   justify-content: center;
@@ -26,5 +25,17 @@ button {
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+
+  &.outlined {
+    background: #fff;
+    border: 1px solid #61e294;
+    color: #61e294;
+  }
+
+  &.signOut {
+    background: #fff;
+    border: 1px solid #ef476f;
+    color: #ef476f;
   }
 }
