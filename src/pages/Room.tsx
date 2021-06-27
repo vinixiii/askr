@@ -7,9 +7,11 @@ import { useHistory } from "react-router-dom";
 //Hooks
 import { useAuth } from "../hooks/useAuth";
 import { useRoom } from "../hooks/useRoom";
+import { useTheme } from "../hooks/useTheme";
 
 //Images
 import logoImg from "../assets/images/logo-askr.svg";
+import darkLogoImg from "../assets/images/dark-logo-askr.svg";
 
 //Styles
 import "../styles/room.scss";
@@ -29,6 +31,8 @@ export function Room() {
   const { user, signInWithGoogle, signOut } = useAuth();
   //Navegação entre páginas
   const history = useHistory();
+  //Tema
+  const { theme, toggleTheme } = useTheme();
   //Armazena os parâmetros da URL na const params
   const params = useParams<RoomParams>();
   //Armazena o params.id na const roomId
@@ -118,25 +122,36 @@ export function Room() {
   }
 
   return (
-    <div id="page-room">
+    <div id="page-room" className={theme}>
       <header>
         <div className="content">
-          <img src={logoImg} alt="Letmeask" />
+          <img src={theme === "light" ? logoImg : darkLogoImg} alt="Letmeask" />
           <div>
             <RoomCode code={roomId} />
-            <Button isSignOut onClick={handleSignOut}>
-              Sair
-            </Button>
+            {user && (
+              <Button isSignOut onClick={handleSignOut}>
+                Sair
+              </Button>
+            )}
           </div>
         </div>
       </header>
 
       <main>
         <div className="room-title">
-          <h1>Sala {title}</h1>
-          <span>
-            {questions.length} {questions.length > 1 ? "perguntas" : "pergunta"}
-          </span>
+          <div>
+            <h1>Sala {title}</h1>
+            <span>
+              {questions.length}{" "}
+              {questions.length > 1 ? "perguntas" : "pergunta"}
+            </span>
+          </div>
+          <div className="toggle">
+            <input id="switch" type="checkbox" />
+            <label htmlFor="switch" onClick={toggleTheme}>
+              Toggle
+            </label>
+          </div>
         </div>
 
         <form onSubmit={(event) => handleSendQuestion(event)}>
@@ -159,7 +174,7 @@ export function Room() {
               </span>
             )}
             <Button type="submit" disabled={!user}>
-              Enviar perguntas
+              Enviar pergunta
             </Button>
           </div>
         </form>

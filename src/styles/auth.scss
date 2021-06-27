@@ -3,6 +3,46 @@
   align-items: stretch;
   height: 100vh;
 
+  &.dark {
+    .main-content {
+      h2 {
+        color: #fefefe;
+      }
+
+      .create-room {
+        background-color: #26353b;
+        color: #fefefe;
+        border-color: #8b939c;
+      }
+
+      .separator {
+        color: #fefefe;
+
+        &::before {
+          background: #fefefe;
+        }
+
+        &::after {
+          background: #fefefe;
+        }
+      }
+
+      form {
+        input {
+          background: #26353b;
+          color: #fefefe;
+
+          &::placeholder {
+            color: #8b939c;
+          }
+        }
+      }
+      p {
+        color: #eaebec;
+      }
+    }
+  }
+
   aside {
     flex: 7;
     background: #61e294;

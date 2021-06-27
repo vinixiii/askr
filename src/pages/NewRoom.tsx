@@ -5,10 +5,12 @@ import { database } from "../services/firebase";
 
 //Hooks
 import { useAuth } from "../hooks/useAuth";
+import { useTheme } from "../hooks/useTheme";
 
 //Images
 import illustrationImg from "../assets/images/illustration.svg";
 import logoImg from "../assets/images/logo-askr.svg";
+import darkLogoImg from "../assets/images/dark-logo-askr.svg";
 
 //Styles
 import "../styles/auth.scss";
@@ -19,6 +21,8 @@ import { Button } from "../components/Button";
 export function NewRoom() {
   const { user } = useAuth();
   const history = useHistory();
+  const { theme } = useTheme();
+
   const [newRoom, setNewRoom] = useState("");
 
   //Adiciona a tipagem FormEvent ao event,
@@ -48,7 +52,7 @@ export function NewRoom() {
   }
 
   return (
-    <div id="page-auth">
+    <div id="page-auth" className={theme}>
       <aside>
         <img
           src={illustrationImg}
@@ -63,7 +67,7 @@ export function NewRoom() {
 
       <main>
         <div className="main-content">
-          <img src={logoImg} alt="Letmeask" />
+          <img src={theme === "light" ? logoImg : darkLogoImg} alt="Letmeask" />
           <h2>Criar uma nova sala</h2>
           <form onSubmit={(event) => handleCreateRoom(event)}>
             <input

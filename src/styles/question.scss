@@ -3,13 +3,12 @@
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   padding: 24px;
-  margin-bottom: 12px;
 
   //Adiciona estilo no .question a partir
   //do próximo que aparecer na tela
-  // & + .question {
-  //   margin-top: 8px;
-  // }
+  & + .question {
+    margin-top: 8px;
+  }
 
   > div {
     display: flex;
@@ -40,10 +39,6 @@
 
   &.answered {
     background: #eaebec;
-  }
-
-  p {
-    color: #2a3d45;
   }
 
   footer {
@@ -80,11 +75,6 @@
       cursor: pointer;
       transition: filter 0.2;
 
-      p {
-        font-size: 12px;
-        color: #8b939c;
-      }
-
       &.like-button {
         display: flex;
         align-items: flex-end;
@@ -101,7 +91,7 @@
       }
 
       &:hover {
-        filter: brightness(0.7);
+        filter: brightness(0.9);
       }
     }
   }

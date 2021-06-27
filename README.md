@@ -1,46 +1,89 @@
-# Getting Started with Create React App
+<h1 align="center">
+  <img alt="askr" title="Pomo.up" src=".github/logo-askr.svg" width="220px" />
+</h1>
+<br>
+<br>
+<p align="center">
+  <img alt="askr" src=".github/askr.png" width="100%">
+</p>
+<br>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Sobre o projeto 💬
 
-## Available Scripts
+O **askr** (letmeask) é uma aplicação web de salas de perguntas e respostas ao-vivo, que traz mais proximidade entre um criador de conteúdo e sua audiência!
 
-In the project directory, you can run:
+Como assim? Simples, se um criador de conteúdo está fazendo uma live e começa a surgir dúvidas sobre o assunto abordado, basta criar uma sala para que os espectadores possam fazer suas perguntas!
 
-### `yarn start`
+## Páginas 🔖
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Essa aplciação possui apenas uma página e um modal:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<h3 align="center">Home</h3>
+<p align="center" style="display: flex; margin: 10px">
+  <img alt="Cadastro" src=".github/home.png" width="100%">
+</p>
 
-### `yarn test`
+<h3 align="center">Criar nova sala</h3>
+<p align="center">
+  <img alt="Cadastro" src=".github/new-room.png" width="100%">
+</p>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<h3 align="center">Sala (criador)</h3>
+<p align="center">
+  <img alt="Cadastro" src=".github/room-owner.png" width="100%">
+</p>
 
-### `yarn build`
+<h3 align="center">Sala (participante)</h3>
+<p align="center">
+  <img alt="Cadastro" src=".github/room-user.png" width="100%">
+</p>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Funcionalidades 🧠
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+A aplicação contém todas as seguintes funcionalidades:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Como criador da sala:
 
-### `yarn eject`
+- Dar destaque, marcar como respondida e excluir uma pergunta
+- Encerrar sala
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Como participante:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Fazer perguntas
+- Dar like nas perguntas
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Funcionalidades extras:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Tema dark/light
+- Fazer login dentro de uma sala
+- Fazer logout
+- Ordem de classificação das perguntas:
+  - 1º Destacadas
+  - 2º Número de likes
+  - 3º Respondidas
 
-## Learn More
+## Como utilizar? 📌
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Para utilizar a aplicação em sua máquina é necessário ter os seguintes softwares instalados:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Node.js](https://nodejs.org/pt-br/)
+
+Com os software citados acima instalados, basta seguir os seguintes passos para executar a aplicação em sua máquina:
+
+1. **Clonar o projeto** <br>
+   Abra o terminal em uma pasta de sua preferência e cole o seguinte código: _`git clone https://github.com/vinixiii/askr`_
+
+2. **Instalar as depêndencias** <br>
+   Dentro do diretório do projeto, abra o terminal e cole o código: _`npm install`_ ou _`yarn`_
+
+## Tecnologias 🛠
+
+Desenvolvido utilizando as seguintes tecnologias:
+
+- [React](https://reactjs.org)
+- [Firebase](https://docs.microsoft.com/pt-br/dotnet/csharp/)
+- [Typescript](https://docs.microsoft.com/pt-br/ef/)
+
+---
+
+<p align="center">Feito com ❤ por: Vinícius Figueiroa 🙋🏻‍♂️</p>

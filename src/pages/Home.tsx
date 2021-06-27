@@ -4,10 +4,12 @@ import { useHistory } from "react-router";
 
 //Hooks
 import { useAuth } from "../hooks/useAuth";
+import { useTheme } from "../hooks/useTheme";
 
 //Images
 import illustrationImg from "../assets/images/illustration.svg";
 import logoImg from "../assets/images/logo-askr.svg";
+import darkLogoImg from "../assets/images/dark-logo-askr.svg";
 import googleIconImg from "../assets/images/google-icon.svg";
 
 //Styles
@@ -19,7 +21,10 @@ import { database } from "../services/firebase";
 
 export function Home() {
   const history = useHistory();
+  const { theme } = useTheme();
+
   const { user, signInWithGoogle } = useAuth();
+
   const [roomCode, setRoomCode] = useState("");
 
   //Direciona para a página de criação de salas
@@ -60,7 +65,7 @@ export function Home() {
   }
 
   return (
-    <div id="page-auth">
+    <div id="page-auth" className={theme}>
       <aside>
         <img
           src={illustrationImg}
@@ -75,7 +80,7 @@ export function Home() {
 
       <main>
         <div className="main-content">
-          <img src={logoImg} alt="Letmeask" />
+          <img src={theme === "light" ? logoImg : darkLogoImg} alt="Letmeask" />
           <button className="create-room" onClick={handleCreateRoom}>
             <img src={googleIconImg} alt="Logo do Google" />
             Crie sua sala com o Google

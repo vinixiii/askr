@@ -7,9 +7,11 @@ import { database } from "../services/firebase";
 
 //Hooks
 import { useAuth } from "../hooks/useAuth";
+import { useTheme } from "../hooks/useTheme";
 
 //Images
 import logoImg from "../assets/images/logo-askr.svg";
+import darkLogoImg from "../assets/images/dark-logo-askr.svg";
 import deleteImg from "../assets/images/delete.svg";
 import checkImg from "../assets/images/check.svg";
 import answerImg from "../assets/images/answer.svg";
@@ -33,6 +35,8 @@ export function AdminRoom() {
   //Informações do usuário logado
   const { user, signOut } = useAuth();
   const history = useHistory();
+  const { theme, toggleTheme } = useTheme();
+
   //Armazena os parâmetros da URL na const params
   const params = useParams<RoomParams>();
   //Armazena o params.id na const roomId
@@ -74,10 +78,10 @@ export function AdminRoom() {
   }
 
   return (
-    <div id="page-room">
+    <div id="page-room" className={theme}>
       <header>
         <div className="content">
-          <img src={logoImg} alt="Letmeask" />
+          <img src={theme === "light" ? logoImg : darkLogoImg} alt="Letmeask" />
           <div>
             <RoomCode code={roomId} />
             <Button isOutlined onClick={handleEndRoom}>
@@ -92,10 +96,19 @@ export function AdminRoom() {
 
       <main>
         <div className="room-title">
-          <h1>Sala {title}</h1>
-          <span>
-            {questions.length} {questions.length > 1 ? "perguntas" : "pergunta"}
-          </span>
+          <div>
+            <h1>Sala {title}</h1>
+            <span>
+              {questions.length}{" "}
+              {questions.length > 1 ? "perguntas" : "pergunta"}
+            </span>
+          </div>
+          <div className="toggle">
+            <input id="switch" type="checkbox" />
+            <label htmlFor="switch" onClick={toggleTheme}>
+              Toggle
+            </label>
+          </div>
         </div>
 
         <div className="question-list">

@@ -15,3 +15,17 @@ button,
 textarea {
   font: 400 16px "Roboto", sans-serif;
 }
+
+.dark {
+  background: #2a3d45;
+
+  .button {
+    &.outlined {
+      background: #26353b;
+    }
+
+    &.signOut {
+      background: #26353b;
+    }
+  }
+}
