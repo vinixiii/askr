@@ -81,8 +81,8 @@ Com os software citados acima instalados, basta seguir os seguintes passos para 
 Desenvolvido utilizando as seguintes tecnologias:
 
 - [React](https://reactjs.org)
-- [Firebase](https://docs.microsoft.com/pt-br/dotnet/csharp/)
-- [Typescript](https://docs.microsoft.com/pt-br/ef/)
+- [Firebase](https://firebase.google.com/?gclid=CjwKCAjwoNuGBhA8EiwAFxomA_tuHp8Oxg8GU70ang9SYtnMMgl4nIkiYc7hmzzXHauyqmQoEj2z2RoCarIQAvD_BwE&gclsrc=aw.ds)
+- [Typescript](https://www.typescriptlang.org/)
 
 ---
 
